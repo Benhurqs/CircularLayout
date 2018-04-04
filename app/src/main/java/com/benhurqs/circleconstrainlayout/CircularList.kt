@@ -107,7 +107,7 @@ class CircularList: ConstraintLayout{
              }
 
             override fun onAnimationEnd(animation: Animator?) {
-                if(position == total-1 && animationListener != null){
+                if(animationListener != null && ((animationClockwise && position == total-1) || (!animationClockwise && position == 0))){
                     animationListener?.onAnimationEnd()
                 }
             }
@@ -116,8 +116,8 @@ class CircularList: ConstraintLayout{
             }
 
             override fun onAnimationStart(animation: Animator?) {
-                if(position == 0 && animationListener != null){
-                    animationListener?.onAnimationStart()
+                if((animationListener != null) && ((animationClockwise && position == 0) || (!animationClockwise && position == total-1))){
+                        animationListener?.onAnimationStart()
                 }
             }
         })
