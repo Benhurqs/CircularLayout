@@ -5,22 +5,47 @@ import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.support.constraint.ConstraintLayout
 import android.support.constraint.ConstraintSet
+import android.util.TimeUtils
 import android.view.View
 import android.view.animation.LinearInterpolator
 import android.widget.ImageView
+import android.widget.Toast
 import kotlinx.android.synthetic.main.activity_main.*
 import java.util.concurrent.TimeUnit
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity(), CircularList.OnClickItemListener, CircularList.OnAnimationListener {
+
+    var list = ArrayList<View>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        test(10)
+        createList(10)
+
+        circularList.setOnAnimationListener(this)
+        circularList.setOnClickItemListener(this)
     }
 
-    private fun test(total: Int){
-        var list = ArrayList<View>()
+    /******** Animation Listener *********/
+    override fun onAnimationStart() {
+        showMsg("Start animation")
+    }
+
+    override fun onAnimationEnd() {
+        showMsg("Finish animation")
+    }
+
+    /******* Click Item Listener ********/
+    override fun onClickItem(position: Int, item: View) {
+        showMsg("click item -> $position")
+    }
+
+    private fun showMsg(msg: String){
+        Toast.makeText(this, msg, Toast.LENGTH_SHORT).show()
+    }
+
+    private fun createList(total: Int){
+        list.clear()
         for(i in 1..total){
             //Item
             var item = ImageView(this)
@@ -28,89 +53,61 @@ class MainActivity : AppCompatActivity() {
             item.id = i
             list.add(item)
         }
-
-        setItens(list)
     }
 
-    private fun setItens(itemList: List<View>){
-        main.removeAllViews()
-        var set = ConstraintSet()
 
-        //Center
+    fun onClickTest(v: View){
+        createList(15)
+        circularList.animated = false
+        circularList.setItens(list)
+    }
+
+    fun onClickCenter(v: View){
+        createList(15)
         var center = ImageView(this)
         center.setImageDrawable(this.resources.getDrawable(R.drawable.abc_ab_share_pack_mtrl_alpha))
         center.id = 123.toInt()
 
-        main.addView(center, 0)
-
-        set.clone(main)
-        set.connect(center.id, ConstraintSet.TOP, main.id, ConstraintSet.TOP, 0)
-        set.connect(center.id, ConstraintSet.BOTTOM, main.id, ConstraintSet.BOTTOM, 0)
-        set.connect(center.id, ConstraintSet.RIGHT, main.id, ConstraintSet.RIGHT, 0)
-        set.connect(center.id, ConstraintSet.LEFT, main.id, ConstraintSet.LEFT, 0)
-        set.applyTo(main)
-
-        val angle = 360/itemList.size
-        itemList.forEachIndexed { index, item ->
-            main.addView(item)
-            val finalAngle = angle*index.toFloat()
-            item.visibility = View.INVISIBLE
-
-            val layoutParams = item.getLayoutParams() as ConstraintLayout.LayoutParams
-            layoutParams.circleAngle = finalAngle
-            layoutParams.circleRadius = 100
-            layoutParams.circleConstraint = main.id
-            item.setLayoutParams(layoutParams)
-
-            circularAnimatorStart(item, finalAngle.toInt(), index)
-        }
-
-//        for((index, item) in itemList){
-//
-//            main.addView(item)
-//
-//            val layoutParams = item.getLayoutParams() as ConstraintLayout.LayoutParams
-//            layoutParams.circleAngle = 45.toFloat()
-//            layoutParams.circleRadius = 100
-//            layoutParams.circleConstraint = main.id
-//            item.setLayoutParams(layoutParams)
-//        }
-
-        //Item
-//        var item = ImageView(this)
-//        item.setImageDrawable(this.resources.getDrawable(R.drawable.notification_bg_normal))
-//        item.id = 321.toInt()
-
-
+        circularList.animated = false
+        circularList.setItens(center, list)
     }
 
+    fun onClickAnimation(v: View){
+        createList(15)
 
-
-    private fun circularAnimatorStart(view: View, finalAngle: Int, position: Int){
-//        var k = 72
-//
-        var anim =  ValueAnimator.ofInt(0, finalAngle);
-        anim.addUpdateListener { valueAnimator ->
-
-            view.visibility = View.VISIBLE
-            val valor = valueAnimator.animatedValue as Int
-            val layoutParams = view.getLayoutParams() as ConstraintLayout.LayoutParams
-            layoutParams.circleAngle = valor.toFloat()
-            view.setLayoutParams(layoutParams)
-        }
-
-
-
-        anim.duration = (position.toLong()) * 300
-        anim.interpolator = LinearInterpolator()
-//        anim.repeatMode = ValueAnimator.RESTART
-//        anim.repeatCount = ValueAnimator.INFINITE
-
-        anim.startDelay = TimeUnit.SECONDS.toMillis(1)
-        anim.start()
+        circularList.animationDuration = 300
+        circularList.animationDelay = 0
+        circularList.animated = true
+        circularList.animationClockwise = true
+        circularList.setItens(list)
     }
 
-    fun onClickTest(v: View){
-        test(15)
+    fun onClickAnimationDelay(v: View){
+        createList(15)
+
+        circularList.animationDuration = 300
+        circularList.animationDelay = TimeUnit.SECONDS.toMillis(2)
+        circularList.animated = true
+        circularList.animationClockwise = true
+        circularList.setItens(list)
+    }
+
+    fun onClickAnimationAntiClockwise(v: View){
+        createList(15)
+
+        circularList.animationDuration = 300
+        circularList.animationDelay = 0
+        circularList.animated = true
+        circularList.animationClockwise = false
+        circularList.setItens(list)
+    }
+
+    fun onClickAnimationDuration(v: View){
+        createList(15)
+
+        circularList.animationDuration = 1500
+        circularList.animationDelay = 0
+        circularList.animated = true
+        circularList.setItens(list)
     }
 }
