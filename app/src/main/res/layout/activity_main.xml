@@ -69,8 +69,8 @@
 
 
 
-    <com.benhurqs.circleconstrainlayout.CircularList
-        android:id="@+id/circularList"
+    <com.benhurqs.circularlayout.widget.CircularLayout
+        android:id="@+id/circularLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
@@ -118,7 +118,7 @@
             android:src="#000"/>
 
 
-    </com.benhurqs.circleconstrainlayout.CircularList>
+    </com.benhurqs.circularlayout.widget.CircularLayout>
 
 
 
