@@ -17,6 +17,7 @@ class MainActivity : AppCompatActivity(), CircularList.OnClickItemListener, Circ
 
     var list = ArrayList<View>()
     var numItem = 5
+    var adapter: ItemAdapter?= null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -26,6 +27,9 @@ class MainActivity : AppCompatActivity(), CircularList.OnClickItemListener, Circ
         circularList.setOnClickItemListener(this)
         circularList.setOnAnimationListener(this)
         circularList.setOnAnimationItemListener(this)
+
+
+        adapter
     }
 
     /********* Animation Item Listener ************/
@@ -62,11 +66,6 @@ class MainActivity : AppCompatActivity(), CircularList.OnClickItemListener, Circ
         list.clear()
         for(i in 1..total){
             //Item
-//            var item = ImageView(this)
-//            item.setImageDrawable(this.resources.getDrawable(R.drawable.notification_bg_normal))
-//            item.id = i
-//            list.add(item)
-
             var item = layoutInflater.inflate(R.layout.item_list, null)
             list.add(item)
 
