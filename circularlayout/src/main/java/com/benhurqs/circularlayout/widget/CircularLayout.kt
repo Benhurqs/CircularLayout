@@ -7,6 +7,7 @@ import android.support.constraint.ConstraintLayout
 import android.support.constraint.ConstraintSet
 import android.util.AttributeSet
 import android.view.View
+import android.view.ViewGroup
 import android.view.animation.LinearInterpolator
 import com.benhurqs.circularlayout.animation.AnimationType
 import java.util.*
@@ -49,7 +50,10 @@ class CircularLayout: ConstraintLayout {
         var list = ArrayList<View>()
         for(i in 0..(this.childCount-1)){
             //Item
-            list.add(this.getChildAt(i))
+            var child = this.getChildAt(i)
+            if(child != null) {
+                list.add(child)
+            }
         }
         setItens(list)
     }
@@ -126,6 +130,7 @@ class CircularLayout: ConstraintLayout {
 
     private fun setItens(itemList: List<View>){
         this.removeAllViews()
+        this.removeAllViewsInLayout()
         var set = ConstraintSet()
 
         //Initialize center point
@@ -145,6 +150,11 @@ class CircularLayout: ConstraintLayout {
 
         val angle = 360/itemList.size
         itemList.forEachIndexed { index, item ->
+            //Verify if item has parent
+            if(item.parent != null){
+                (item.parent as ViewGroup).removeView(item)
+            }
+
             this.addView(item)
             val finalAngle = angle*index.toFloat()
 
@@ -218,9 +228,6 @@ class CircularLayout: ConstraintLayout {
 
 
         anim.interpolator = LinearInterpolator()
-//        anim.repeatMode = ValueAnimator.RESTART
-//        anim.repeatCount = ValueAnimator.INFINITE
-
         anim.startDelay = animationDelay
         anim.start()
     }

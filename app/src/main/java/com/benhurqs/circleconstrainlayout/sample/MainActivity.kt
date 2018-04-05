@@ -16,7 +16,7 @@ class MainActivity : AppCompatActivity(), CircularLayout.OnClickItemListener, Ci
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         circularLayout
-                .setAnimationType(AnimationType.ANTICLOCKWISE)
+//                .setAnimationType(AnimationType.ANTICLOCKWISE)
                 .setCircleRadius(200)
                 .setOnClickItemListener(this)
                 .setOnAnimationListener(this)
@@ -27,14 +27,10 @@ class MainActivity : AppCompatActivity(), CircularLayout.OnClickItemListener, Ci
 
     /********* Animation Item Listener ************/
     override fun onAnimationStart(position: Int, item: View) {
-//        var text = item.findViewById<View>(R.id.text)
-//        text.visibility = View.INVISIBLE
 
     }
 
     override fun onAnimationEnd(position: Int, item: View) {
-//        var text = item.findViewById<View>(R.id.text)
-//        text.visibility = View.VISIBLE
     }
 
     /******** Animation Listener *********/
@@ -53,6 +49,10 @@ class MainActivity : AppCompatActivity(), CircularLayout.OnClickItemListener, Ci
 
     private fun showMsg(msg: String){
         Toast.makeText(this, msg, Toast.LENGTH_SHORT).show()
+    }
+
+    fun onClickTest(v: View){
+        circularLayout.start()
     }
 
 }
