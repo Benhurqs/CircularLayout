@@ -22,26 +22,44 @@ class MainActivity : AppCompatActivity(), CircularList.OnClickItemListener, Circ
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        createList(10)
+//        createList(10)
         circularList.circleRadius = 200
         circularList.setOnClickItemListener(this)
-        circularList.setOnAnimationListener(this)
-        circularList.setOnAnimationItemListener(this)
+                .setOnAnimationListener(this)
+                .setOnAnimationItemListener(this)
+                .start()
 
 
-        adapter
+//        val listItem = ArrayList<ItemObj>()
+//        var item = ItemObj()
+//        item.img = R.drawable.barbecue
+//        item.text = "Barbecue"
+//        listItem.add(item)
+//
+//        item = ItemObj()
+//        item.img = R.drawable.tomate
+//        item.text = "Tomate"
+//        listItem.add(item)
+//
+//        item = ItemObj()
+//        item.img = R.drawable.manjericao
+//        item.text = "Manjericão"
+//        listItem.add(item)
+
+//        adapter = ItemAdapter(listItem)
+//        circularList.setAdapter(adapter!!)
     }
 
     /********* Animation Item Listener ************/
     override fun onAnimationStart(position: Int, item: View) {
-        var text = item.findViewById<View>(R.id.text)
-        text.visibility = View.INVISIBLE
+//        var text = item.findViewById<View>(R.id.text)
+//        text.visibility = View.INVISIBLE
 
     }
 
     override fun onAnimationEnd(position: Int, item: View) {
-        var text = item.findViewById<View>(R.id.text)
-        text.visibility = View.VISIBLE
+//        var text = item.findViewById<View>(R.id.text)
+//        text.visibility = View.VISIBLE
     }
 
     /******** Animation Listener *********/
@@ -62,69 +80,69 @@ class MainActivity : AppCompatActivity(), CircularList.OnClickItemListener, Circ
         Toast.makeText(this, msg, Toast.LENGTH_SHORT).show()
     }
 
-    private fun createList(total: Int){
-        list.clear()
-        for(i in 1..total){
-            //Item
-            var item = layoutInflater.inflate(R.layout.item_list, null)
-            list.add(item)
+//    private fun createList(total: Int){
+//        list.clear()
+//        for(i in 1..total){
+//            //Item
+//            var item = layoutInflater.inflate(R.layout.item_list, null)
+//            list.add(item)
+//
+//        }
+//    }
 
-        }
-    }
 
-
-    fun onClickTest(v: View){
-        createList(numItem)
-        circularList.animated = false
-        circularList.setItens(list)
-    }
-
-    fun onClickCenter(v: View){
-        createList(numItem)
-        var center = ImageView(this)
-        center.setImageDrawable(this.resources.getDrawable(R.drawable.abc_ab_share_pack_mtrl_alpha))
-        center.id = 123.toInt()
-
-        circularList.animated = false
-        circularList.setItens(center, list)
-    }
-
-    fun onClickAnimation(v: View){
-        createList(numItem)
-
-        circularList.animationDuration = 300
-        circularList.animationDelay = 0
-        circularList.animated = true
-        circularList.animationClockwise = true
-        circularList.setItens(list)
-    }
-
-    fun onClickAnimationDelay(v: View){
-        createList(numItem)
-
-        circularList.animationDuration = 300
-        circularList.animationDelay = TimeUnit.SECONDS.toMillis(2)
-        circularList.animated = true
-        circularList.animationClockwise = true
-        circularList.setItens(list)
-    }
-
-    fun onClickAnimationAntiClockwise(v: View){
-        createList(numItem)
-
-        circularList.animationDuration = 300
-        circularList.animationDelay = 0
-        circularList.animated = true
-        circularList.animationClockwise = false
-        circularList.setItens(list)
-    }
-
-    fun onClickAnimationDuration(v: View){
-        createList(numItem)
-
-        circularList.animationDuration = 1500
-        circularList.animationDelay = 0
-        circularList.animated = true
-        circularList.setItens(list)
-    }
+//    fun onClickTest(v: View){
+//        createList(numItem)
+//        circularList.animated = false
+//        circularList.setItens(list)
+//    }
+//
+//    fun onClickCenter(v: View){
+//        createList(numItem)
+//        var center = ImageView(this)
+//        center.setImageDrawable(this.resources.getDrawable(R.drawable.abc_ab_share_pack_mtrl_alpha))
+//        center.id = 123.toInt()
+//
+//        circularList.animated = false
+//        circularList.setItens(center, list)
+//    }
+//
+//    fun onClickAnimation(v: View){
+//        createList(numItem)
+//
+//        circularList.animationDuration = 300
+//        circularList.animationDelay = 0
+//        circularList.animated = true
+//        circularList.animationClockwise = true
+//        circularList.setItens(list)
+//    }
+//
+//    fun onClickAnimationDelay(v: View){
+//        createList(numItem)
+//
+//        circularList.animationDuration = 300
+//        circularList.animationDelay = TimeUnit.SECONDS.toMillis(2)
+//        circularList.animated = true
+//        circularList.animationClockwise = true
+//        circularList.setItens(list)
+//    }
+//
+//    fun onClickAnimationAntiClockwise(v: View){
+//        createList(numItem)
+//
+//        circularList.animationDuration = 300
+//        circularList.animationDelay = 0
+//        circularList.animated = true
+//        circularList.animationClockwise = false
+//        circularList.setItens(list)
+//    }
+//
+//    fun onClickAnimationDuration(v: View){
+//        createList(numItem)
+//
+//        circularList.animationDuration = 1500
+//        circularList.animationDelay = 0
+//        circularList.animated = true
+//        circularList.setItens(list)
+//    }
 }

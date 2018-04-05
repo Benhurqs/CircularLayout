@@ -5,9 +5,12 @@ import android.animation.ValueAnimator
 import android.content.Context
 import android.support.constraint.ConstraintLayout
 import android.support.constraint.ConstraintSet
+import android.support.v7.widget.RecyclerView
 import android.util.AttributeSet
+import android.util.Log
 import android.view.View
 import android.view.animation.LinearInterpolator
+import android.widget.Adapter
 
 /**
  * Created by benhur.souza on 04/04/18.
@@ -28,11 +31,11 @@ class CircularList: ConstraintLayout{
         fun onAnimationEnd()
     }
 
-    var animated = false
+    var animated = true
     var animationDelay: Long = 0
     var animationClockwise = true
     var animationDuration = 300
-    var circleRadius = 100
+    var circleRadius = 300
     private var clickListener: OnClickItemListener? = null
     private var animationListener: OnAnimationListener? = null
     private var animationItemListener: OnAnimationItemListener? = null
@@ -41,20 +44,33 @@ class CircularList: ConstraintLayout{
     constructor(context: Context?, attrs: AttributeSet?) : super(context, attrs)
     constructor(context: Context?, attrs: AttributeSet?, defStyleAttr: Int) : super(context, attrs, defStyleAttr)
 
+
+    fun start(){
+        var list = ArrayList<View>()
+        for(i in 0..(this.childCount-1)){
+            //Item
+           list.add(this.getChildAt(i))
+        }
+        setItens(list)
+    }
+
     fun setItens(itemList: List<View>){
         setItens(null, itemList)
     }
 
-    fun setOnClickItemListener(listener: OnClickItemListener){
+    fun setOnClickItemListener(listener: OnClickItemListener): CircularList{
         this.clickListener = listener
+        return this
     }
 
-    fun setOnAnimationListener(listener: OnAnimationListener){
+    fun setOnAnimationListener(listener: OnAnimationListener): CircularList{
         this.animationListener = listener
+        return this
     }
 
-    fun setOnAnimationItemListener(listener: OnAnimationItemListener){
+    fun setOnAnimationItemListener(listener: OnAnimationItemListener): CircularList{
         this.animationItemListener = listener
+        return this
     }
 
     fun setItens(centerView: View? = null, itemList: List<View>){
