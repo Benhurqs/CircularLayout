@@ -13,17 +13,31 @@ import android.widget.Toast
 import kotlinx.android.synthetic.main.activity_main.*
 import java.util.concurrent.TimeUnit
 
-class MainActivity : AppCompatActivity(), CircularList.OnClickItemListener, CircularList.OnAnimationListener {
+class MainActivity : AppCompatActivity(), CircularList.OnClickItemListener, CircularList.OnAnimationListener, CircularList.OnAnimationItemListener {
 
     var list = ArrayList<View>()
+    var numItem = 5
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         createList(10)
-
-        circularList.setOnAnimationListener(this)
+        circularList.circleRadius = 200
         circularList.setOnClickItemListener(this)
+        circularList.setOnAnimationListener(this)
+        circularList.setOnAnimationItemListener(this)
+    }
+
+    /********* Animation Item Listener ************/
+    override fun onAnimationStart(position: Int, item: View) {
+        var text = item.findViewById<View>(R.id.text)
+        text.visibility = View.INVISIBLE
+
+    }
+
+    override fun onAnimationEnd(position: Int, item: View) {
+        var text = item.findViewById<View>(R.id.text)
+        text.visibility = View.VISIBLE
     }
 
     /******** Animation Listener *********/
@@ -48,22 +62,26 @@ class MainActivity : AppCompatActivity(), CircularList.OnClickItemListener, Circ
         list.clear()
         for(i in 1..total){
             //Item
-            var item = ImageView(this)
-            item.setImageDrawable(this.resources.getDrawable(R.drawable.notification_bg_normal))
-            item.id = i
+//            var item = ImageView(this)
+//            item.setImageDrawable(this.resources.getDrawable(R.drawable.notification_bg_normal))
+//            item.id = i
+//            list.add(item)
+
+            var item = layoutInflater.inflate(R.layout.item_list, null)
             list.add(item)
+
         }
     }
 
 
     fun onClickTest(v: View){
-        createList(15)
+        createList(numItem)
         circularList.animated = false
         circularList.setItens(list)
     }
 
     fun onClickCenter(v: View){
-        createList(15)
+        createList(numItem)
         var center = ImageView(this)
         center.setImageDrawable(this.resources.getDrawable(R.drawable.abc_ab_share_pack_mtrl_alpha))
         center.id = 123.toInt()
@@ -73,7 +91,7 @@ class MainActivity : AppCompatActivity(), CircularList.OnClickItemListener, Circ
     }
 
     fun onClickAnimation(v: View){
-        createList(15)
+        createList(numItem)
 
         circularList.animationDuration = 300
         circularList.animationDelay = 0
@@ -83,7 +101,7 @@ class MainActivity : AppCompatActivity(), CircularList.OnClickItemListener, Circ
     }
 
     fun onClickAnimationDelay(v: View){
-        createList(15)
+        createList(numItem)
 
         circularList.animationDuration = 300
         circularList.animationDelay = TimeUnit.SECONDS.toMillis(2)
@@ -93,7 +111,7 @@ class MainActivity : AppCompatActivity(), CircularList.OnClickItemListener, Circ
     }
 
     fun onClickAnimationAntiClockwise(v: View){
-        createList(15)
+        createList(numItem)
 
         circularList.animationDuration = 300
         circularList.animationDelay = 0
@@ -103,7 +121,7 @@ class MainActivity : AppCompatActivity(), CircularList.OnClickItemListener, Circ
     }
 
     fun onClickAnimationDuration(v: View){
-        createList(15)
+        createList(numItem)
 
         circularList.animationDuration = 1500
         circularList.animationDelay = 0

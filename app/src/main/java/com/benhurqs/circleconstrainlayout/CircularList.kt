@@ -18,6 +18,11 @@ class CircularList: ConstraintLayout{
         fun onClickItem(position: Int, item: View)
     }
 
+    interface OnAnimationItemListener{
+        fun onAnimationStart(position: Int, item: View)
+        fun onAnimationEnd(position: Int, item: View)
+    }
+
     interface OnAnimationListener{
         fun onAnimationStart()
         fun onAnimationEnd()
@@ -27,8 +32,10 @@ class CircularList: ConstraintLayout{
     var animationDelay: Long = 0
     var animationClockwise = true
     var animationDuration = 300
+    var circleRadius = 100
     private var clickListener: OnClickItemListener? = null
     private var animationListener: OnAnimationListener? = null
+    private var animationItemListener: OnAnimationItemListener? = null
 
     constructor(context: Context?) : super(context)
     constructor(context: Context?, attrs: AttributeSet?) : super(context, attrs)
@@ -44,6 +51,10 @@ class CircularList: ConstraintLayout{
 
     fun setOnAnimationListener(listener: OnAnimationListener){
         this.animationListener = listener
+    }
+
+    fun setOnAnimationItemListener(listener: OnAnimationItemListener){
+        this.animationItemListener = listener
     }
 
     fun setItens(centerView: View? = null, itemList: List<View>){
@@ -80,7 +91,7 @@ class CircularList: ConstraintLayout{
 
             val layoutParams = item.getLayoutParams() as ConstraintLayout.LayoutParams
             layoutParams.circleAngle = finalAngle
-            layoutParams.circleRadius = 100
+            layoutParams.circleRadius = circleRadius
             layoutParams.circleConstraint = this.id
             item.setLayoutParams(layoutParams)
 
@@ -107,6 +118,10 @@ class CircularList: ConstraintLayout{
              }
 
             override fun onAnimationEnd(animation: Animator?) {
+                if(animationItemListener != null){
+                    animationItemListener?.onAnimationEnd(position, view)
+                }
+
                 if(animationListener != null && ((animationClockwise && position == total-1) || (!animationClockwise && position == 0))){
                     animationListener?.onAnimationEnd()
                 }
@@ -116,6 +131,10 @@ class CircularList: ConstraintLayout{
             }
 
             override fun onAnimationStart(animation: Animator?) {
+                if(animationItemListener != null){
+                    animationItemListener?.onAnimationStart(position, view)
+                }
+
                 if((animationListener != null) && ((animationClockwise && position == 0) || (!animationClockwise && position == total-1))){
                         animationListener?.onAnimationStart()
                 }
