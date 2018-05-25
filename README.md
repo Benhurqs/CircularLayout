@@ -6,7 +6,6 @@ It`s a simple circular layout lib.
 
 ## How to use
 
-
 1 - Import circularLayout module or .aar
     
     If you need help to import module this link (https://developer.android.com/studio/projects/add-app-module) help you.
@@ -55,5 +54,15 @@ Listeners
 - CircularLayout.OnClickItemListener
 - CircularLayout.OnAnimationListener
 - CircularLayout.OnAnimationItemListener
+
+
+---
+About me
+
+- [benhurqs.com](benhurqs.com)
+- [https://www.linkedin.com/in/benhurqs/](https://www.linkedin.com/in/benhurqs/)
+
+
+
 
 
