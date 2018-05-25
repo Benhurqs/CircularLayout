@@ -48,6 +48,11 @@ class CircularLayout: ConstraintLayout {
 
     fun start(){
         var list = ArrayList<View>()
+
+        if(centerView != null){
+           this.removeView(centerView)
+        }
+
         for(i in 0..(this.childCount-1)){
             //Item
             var child = this.getChildAt(i)
